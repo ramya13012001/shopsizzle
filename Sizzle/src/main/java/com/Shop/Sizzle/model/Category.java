@@ -2,11 +2,14 @@ package com.Shop.Sizzle.model;
 
 public class Category {
     private String categoryName;
-    private String categoryId;
+    private Long categoryId;
 
-    public Category(String categoryId, String categoryName) {
-        this.categoryId = categoryId;
+    public Category(String categoryName, Long categoryId) {
         this.categoryName = categoryName;
+        this.categoryId = categoryId;
+    }
+
+    public Category() {
     }
 
     public String getCategoryName() {
@@ -17,11 +20,11 @@ public class Category {
         this.categoryName = categoryName;
     }
 
-    public String getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 }
