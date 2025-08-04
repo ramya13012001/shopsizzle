@@ -2,6 +2,7 @@ package com.Shop.Sizzle.controller;
 
 import com.Shop.Sizzle.model.Category;
 import com.Shop.Sizzle.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,30 +25,21 @@ public class CategoryController {
         return new ResponseEntity<>(allcategories, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/public/categories", method = RequestMethod.POST)
-    public ResponseEntity<String> CreateCategory(@RequestBody Category category) {
+    @PostMapping("/public/categories")
+    public ResponseEntity<String> CreateCategory(@Valid @RequestBody Category category) {
         categoryService.createNewCategory(category);
-        URI location = URI.create("/api/public/categories/" + category.getCategoryId());
-        return ResponseEntity.created(location).body("Category created successfully");
+        return new ResponseEntity<>("Category created successfully",HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/admin/categories/{categoryId}", method = RequestMethod.DELETE)
+    @DeleteMapping( "/admin/categories/{categoryId}")
     public ResponseEntity deleteCategory(@PathVariable("categoryId") Long categoryId) {
-        try {
             String status = categoryService.deleteCategory(categoryId);
             return new ResponseEntity<>(status, HttpStatus.OK);
-        } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
-        }
     }
 
     @PutMapping("/public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable("categoryId") Long categoryId) {
-        try {
             Category savedCategory = categoryService.updateCategory(category, categoryId);
             return ResponseEntity.ok("Category updated successfully " + savedCategory.getCategoryId());
-        } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
-        }
     }
 }
