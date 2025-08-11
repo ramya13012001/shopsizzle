@@ -1,5 +1,6 @@
 package com.Shop.Sizzle.exception;
 
+import com.Shop.Sizzle.payload.APIResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,17 +22,17 @@ public class GlobalExceptionHandler {
             String message = err.getDefaultMessage();
             response.put(fieldName, message);
         });
-        return new ResponseEntity<Map<String,String>>(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    ResponseEntity<String> resourceNotFoundException(ResourceNotFoundException re) {
-        String message = re.getMessage();
-        return new ResponseEntity<String>(message, HttpStatus.NOT_FOUND);
+    ResponseEntity<APIResponse> resourceNotFoundException(ResourceNotFoundException re) {
+        APIResponse apiResponse = new APIResponse( re.getMessage(),false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(APIException.class)
-    ResponseEntity<String> aPIException(APIException e) {
-        String message = e.getMessage();
-        return new ResponseEntity<String>(message, HttpStatus.BAD_REQUEST);
+    ResponseEntity<APIResponse> aPIException(APIException e) {
+        APIResponse apiResponse = new APIResponse( e.getMessage(),false);
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
     }
 }
