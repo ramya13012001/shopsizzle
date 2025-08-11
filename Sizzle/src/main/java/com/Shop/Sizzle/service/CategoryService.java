@@ -1,16 +1,15 @@
 package com.Shop.Sizzle.service;
 
-import com.Shop.Sizzle.model.Category;
-
-import java.util.List;
+import com.Shop.Sizzle.payload.CategoryDTO;
+import com.Shop.Sizzle.payload.CategoryResponse;
 
 public interface CategoryService {
 
-    List<Category> getAllcategories();
+    CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize , String sortBy,String sortaOrder);
 
-    void createNewCategory(Category category);
+    CategoryDTO createNewCategory(CategoryDTO categoryDTOS);
 
-    String deleteCategory(Long categoryId);
+    CategoryDTO deleteCategory(Long categoryId);
 
-    Category updateCategory(Category category, Long categoryId);
+    CategoryDTO updateCategory(CategoryDTO categoryDTOS, Long categoryId);
 }
